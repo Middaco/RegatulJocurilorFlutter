@@ -1,0 +1,44 @@
+[
+  {
+    "nameOfTable" : "Table of heroes",
+    "playerAvatars" : [
+      "avatar_images/avatar1.png",
+      "avatar_images/avatar2.png"
+    ],
+    "gamesPlayedAtThisTable" : [
+      "Carcassonne",
+      "Everdell"
+    ]
+  },
+  {
+    "nameOfTable" : "The fun one",
+    "playerAvatars" : [
+      "avatar_images/avatar1.png",
+      "avatar_images/avatar2.png",
+      "avatar_images/avatar3.png"
+    ],
+    "gamesPlayedAtThisTable" : "Exploding Kittens"
+  },
+  {
+    "nameOfTable" : "Dog lovers",
+    "playerAvatars" : "avatar_images/avatar4.png",
+    "gamesPlayedAtThisTable" : "Dog Park"
+  },
+  {
+    "nameOfTable" : "Hardcore table",
+    "playerAvatars" : [
+      "avatar_images/avatar1.png",
+      "avatar_images/avatar2.png",
+      "avatar_images/avatar3.png",
+      "avatar_images/avatar4.png"
+    ],
+    "gamesPlayedAtThisTable" : [
+      "Carcassonne",
+      "Everdell",
+      "Stone Age",
+      "Dark Stories",
+      "Terraforming Mars",
+      "Shogun no Katana"
+    ]
+  }
+]
