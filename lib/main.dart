@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:regatul_jocurilor_flutter/home_page.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(MaterialApp(
-    initialRoute: '/login',
-    routes: <String, WidgetBuilder>{
-      '/login' : (BuildContext context) => const LogInPage(),
-      '/' : (BuildContext context) => HomePage()
-    },
+  GoRouter router = GoRouter(
+    initialLocation: '/login',
+    routes: [
+      GoRoute(
+        name : 'home',
+        path: '/',
+        builder: (context, state) => HomePage()
+      ),
+      GoRoute(
+          name: 'login',
+          path: '/login',
+          builder: (context, state) => const LogInPage()
+      ),
+      //GoRoute(
+      //    name: 'table',
+      //    path: '/Tables/:tableId',
+          //builder: (context, state) => TablePage(tableId)
+      //)
+    ]
+  );
+  runApp(MaterialApp.router(
+    routerConfig: router,
   ));
 }
 
@@ -65,7 +82,7 @@ class LogInPage extends StatelessWidget{
                     textStyle: const TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/');
+                    context.goNamed('home');
                   },
                   child: const Text('Log In'),
                 ),

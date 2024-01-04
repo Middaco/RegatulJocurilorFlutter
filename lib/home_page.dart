@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:regatul_jocurilor_flutter/player_instance.dart';
 import 'table_instance.dart';
 
 class HomePage extends StatelessWidget{
@@ -9,7 +12,7 @@ class HomePage extends StatelessWidget{
 
   var listOfTables = <GameTable>[];
 
-  Widget buildTable(GameTable currentGameTable){
+  Widget buildTable(BuildContext context, GameTable currentGameTable){
     List<InlineSpan> gameBoardsSpan = 
       currentGameTable.gamesPlayedAtThisTable.map(
             (gameBoard) => TextSpan(text: '$gameBoard\n')
@@ -20,15 +23,35 @@ class HomePage extends StatelessWidget{
       gameBoardsSpan.add(TextSpan(text: '+$numberOfLeftoverBoardGames more games'));
     }
     return ListTile(
+      //onTap: (){
+      //  context.goNamed('table', pathParameters: {'tableId' : currentGameTable.nameOfTable});
+      //},
       leading: ImageGroup(
-          images: currentGameTable.playerAvatars
+          images: currentGameTable.getPlayersAvatars()
       ),
       title: Text(currentGameTable.nameOfTable),
       subtitle: RichText(
         text: TextSpan(
           children: gameBoardsSpan
         ),
-      )
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () {
+              //TODO: delete this table
+            },
+            child: const Icon(Icons.delete)
+          ),
+          GestureDetector(
+            onTap: (){
+              //TODO: update this table
+            },
+            child: const Icon(Icons.update)
+          )
+        ],
+      ),
     );
     
   }
@@ -37,9 +60,8 @@ class HomePage extends StatelessWidget{
     return ListView.builder(
         itemCount: listOfTables.length,
         itemBuilder: (context, item){
-          return buildTable(listOfTables[item]);
+          return buildTable(context, listOfTables[item]);
         }
-
     );
   }
 
@@ -47,10 +69,18 @@ class HomePage extends StatelessWidget{
     listOfTables.add(
         GameTable(
             nameOfTable: "Table 1",
-            playerAvatars: List<String>.of(
+            listOfPlayersAtThisTable: List<Player>.of(
               [
-                "avatar_images/avatar1.png",
-                "avatar_images/avatar2.png"
+                Player(
+                    username: "Player1",
+                    playerAvatar: "avatar_images/avatar1.png",
+                    gamesScores: {}
+                ),
+                Player(
+                    username: "Player2",
+                    playerAvatar: "avatar_images/avatar2.png",
+                    gamesScores: {}
+                )
               ]
             ),
             gamesPlayedAtThisTable: List<String>.of(
@@ -63,12 +93,28 @@ class HomePage extends StatelessWidget{
     listOfTables.add(
       GameTable(
           nameOfTable: "Table 2",
-          playerAvatars: List<String>.of(
+          listOfPlayersAtThisTable: List<Player>.of(
             [
-              "avatar_images/avatar3.png",
-              "avatar_images/avatar1.png",
-              "avatar_images/avatar2.png",
-              "avatar_images/avatar4.png",
+              Player(
+                  username: "Player1",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player2",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player3",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player4",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              )
             ]
           ),
           gamesPlayedAtThisTable: List<String>.of(
@@ -82,16 +128,38 @@ class HomePage extends StatelessWidget{
     listOfTables.add(
       GameTable(
           nameOfTable: "Table 3",
-          playerAvatars: List<String>.of(
+          listOfPlayersAtThisTable: List<Player>.of(
             [
-              "avatar_images/avatar3.png",
-              "avatar_images/avatar1.png",
-              "avatar_images/avatar2.png",
-              "avatar_images/avatar4.png",
-              "avatar_images/avatar3.png",
-              "avatar_images/avatar1.png",
-              "avatar_images/avatar2.png",
-              "avatar_images/avatar4.png",
+              Player(
+                  username: "Player1",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player2",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player3",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player4",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player5",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              ),
+              Player(
+                  username: "Player6",
+                  playerAvatar: "avatar_images/avatar2.png",
+                  gamesScores: {}
+              )
             ]
           ),
           gamesPlayedAtThisTable: List<String>.of(
@@ -120,6 +188,13 @@ class HomePage extends StatelessWidget{
         title: const Text('Home'),
       ),
       body: buildListOfTables(context),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+
+        },
+      ),
+
     );
   }
 
